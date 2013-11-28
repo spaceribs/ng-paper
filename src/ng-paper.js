@@ -1,18 +1,19 @@
 'use strict';
 
 angular.module('spaceribs.ngPaper', [])
+    .directive('paper', ['$http', function ($http) {
+        return {
+            replace: true,
+            template: '<canvas></canvas>',
+            restrict: 'E',
+            link: function postLink(scope, element, attrs) {
 
-  .directive('myDirective', function() {
+                var paperscope = new paper.PaperScope();
+                paperscope.setup(element[0]);
 
-    return {
-      restrict: 'EAC',
-      scope: true,
-      compile: function compile(tElement, tAttrs, transclude) {
-        tElement.html('<span>hello {{name}}</span>');
-        return function postLink(scope, iElement, iAttrs, controller) {
-          scope.name = 'world';
+                $http.get(attrs.src).success(function (data) {
+                    paper.PaperScript.evaluate(data, paperscope);
+                });
+            }
         };
-      }
-    };
-
-  });
+    }]);

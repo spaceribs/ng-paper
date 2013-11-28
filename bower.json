@@ -2,10 +2,30 @@
   "name": "ng-paper",
   "version": "0.0.1",
   "dependencies": {
+    "paper": "~0.9.13"
   },
   "devDependencies": {
     "angular": "latest",
     "angular-mocks": "latest",
     "jquery": "latest"
-  }
+  },
+  "homepage": "https://github.com/spaceribs/ng-paper",
+  "authors": [
+    "spaceribs <spaceribs@gmail.com>"
+  ],
+  "description": "Angular module for Paper.js",
+  "main": "dist/ng-paper.min.js",
+  "keywords": [
+    "paper",
+    "paper.js",
+    "angular"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
 }
