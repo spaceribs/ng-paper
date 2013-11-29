@@ -57,10 +57,6 @@ module.exports = function (grunt) {
                 files: '<%= jshint.gruntfile.src %>',
                 tasks: ['jshint:gruntfile']
             },
-            less: {
-                files: ['<%= yo.src %>/{,*/}*.less'],
-                tasks: ['less:dist']
-            },
             app: {
                 files: [
                     '<%= yo.src %>/{,*/}*.html',
@@ -90,17 +86,6 @@ module.exports = function (grunt) {
                             mountFolder(connect, yoConfig.src)
                         ];
                     }
-                }
-            }
-        },
-        less: {
-            options: {
-                // dumpLineNumbers: 'all',
-                paths: ['<%= yo.src %>']
-            },
-            dist: {
-                files: {
-                    '<%= yo.src %>/<%= yo.name %>.css': '<%= yo.src %>/<%= yo.name %>.less'
                 }
             }
         },
@@ -144,11 +129,6 @@ module.exports = function (grunt) {
                 src: ['<%= yo.src %>/<%= pkg.name %>.js'],
                 dest: '<%= yo.dist %>/<%= pkg.name %>.js'
             }
-            // dist: {
-            //   files: {
-            //     '/.js': '/.js'
-            //   }
-            // }
         },
         concat: {
             options: {
@@ -168,6 +148,9 @@ module.exports = function (grunt) {
                 src: '<%= concat.dist.dest %>',
                 dest: '<%= yo.dist %>/<%= pkg.name %>.min.js'
             }
+        },
+        bump: {
+            files: ['package.json', 'bower.json']
         }
     });
 
@@ -178,15 +161,28 @@ module.exports = function (grunt) {
 
     grunt.registerTask('build', [
         'clean:dist',
-        'less:dist',
         'ngmin:dist',
         'uglify:dist'
     ]);
 
-    grunt.registerTask('release', [
+    grunt.registerTask('patch', [
         'test',
-        'bump-only',
-        'dist',
+        'bump-only:patch',
+        'build',
+        'bump-commit'
+    ]);
+
+    grunt.registerTask('minor', [
+        'test',
+        'bump-only:minor',
+        'build',
+        'bump-commit'
+    ]);
+
+    grunt.registerTask('major', [
+        'test',
+        'bump-only:major',
+        'build',
         'bump-commit'
     ]);
 
