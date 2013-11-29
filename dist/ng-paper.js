@@ -15,4 +15,23 @@ angular.module('spaceribs.ngPaper', []).directive('paper', [
       }
     };
   }
-]);
+]).directive('paperscript', [function () {
+    return {
+      replace: true,
+      template: '<canvas></canvas>',
+      restrict: 'EA',
+      compile: function () {
+        var paperscript = '';
+        return {
+          pre: function preLink(scope, iElement) {
+            paperscript = iElement.text();
+          },
+          post: function postLink(scope, iElement) {
+            var paperscope = new paper.PaperScope();
+            paperscope.setup(iElement[0]);
+            paper.PaperScript.evaluate(paperscript, paperscope);
+          }
+        };
+      }
+    };
+  }]);

@@ -21,7 +21,7 @@ angular.module('spaceribs.ngPaper', [])
         return {
             replace: true,
             template: '<canvas></canvas>',
-            restrict: 'E',
+            restrict: 'EA',
             compile: function () {
                 var paperscript = '';
                 return {
