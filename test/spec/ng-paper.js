@@ -1,43 +1,23 @@
 'use strict';
 
 describe('Module: ngPaper', function () {
-    var scope, $sandbox, $compile, $timeout;
+    var scope, element;
 
-    // load the controller's module
+    // load the directive's module
     beforeEach(module('spaceribs.ngPaper'));
 
-    beforeEach(inject(function ($injector, $rootScope, _$compile_, _$timeout_) {
-        scope = $rootScope;
-        $compile = _$compile_;
-        $timeout = _$timeout_;
-
-        $sandbox = $('<div id="sandbox"></div>').appendTo($('body'));
+    beforeEach(inject(function ($rootScope) {
+        scope = $rootScope.$new();
     }));
 
     afterEach(function () {
-        $sandbox.remove();
         scope.$destroy();
     });
 
-    var templates = {
-        'default': {
-            scope: {},
-            element: '<div my-directive></div>'
-        }
-    };
-
-    function compileDirective(template) {
-        template = template ? templates[template] : templates['default'];
-        angular.extend(scope, template.scope || templates['default'].scope);
-        var $element = $(template.element).appendTo($sandbox);
-        $element = $compile($element)(scope);
-        scope.$digest();
-        return $element;
-    }
-
-    it('should correctly display hello world', function () {
-        var elm = compileDirective();
-        expect(elm.text()).toBe('hello world');
-    });
+    it('should have initialized a new project into Paper', inject(function ($compile) {
+        element = angular.element('<paper src="drawing_test.js" width="300" height="300"></paper>');
+        element = $compile(element)(scope);
+        expect(paper.projects.length).toBeGreaterThan(0);
+    }));
 
 });

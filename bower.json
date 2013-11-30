@@ -2,6 +2,7 @@
   "name": "ng-paper",
   "version": "0.1.2",
   "dependencies": {
+    "angular": "~1.2.3",
     "paper": "~0.9.13"
   },
   "devDependencies": {
