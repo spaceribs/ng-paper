@@ -22,6 +22,7 @@ module.exports = function (grunt) {
     // Project configuration
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        bower: grunt.file.readJSON('bower.json'),
         yo: yoConfig,
         meta: {
             banner: '/**\n' +
@@ -150,7 +151,12 @@ module.exports = function (grunt) {
             }
         },
         bump: {
-            files: ['package.json', 'bower.json']
+            options : {
+                files: ['package.json', 'bower.json'],
+                commitFiles: ['package.json', 'bower.json'],
+                updateConfigs: ['pkg', 'bower'],
+                push: false
+            }
         }
     });
 
